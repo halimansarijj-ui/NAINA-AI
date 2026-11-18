@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated Google user profile and voice preferences for Naina AI.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Google account display name."
+        },
+        "email": {
+          "type": "string",
+          "description": "Google account email address."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Optional Google profile photo URL."
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "enum": ["HINDI", "URDU", "HINGLISH", "ENGLISH"],
+          "description": "Preferred assistant language."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the profile was created (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the profile was last updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "displayName", "email", "preferredLanguage", "createdAt", "updatedAt"]
+    },
+    "SavedCreation": {
+      "title": "SavedCreation",
+      "description": "AI-generated website, game, Kotlin snippet, or thumbnail/video prompt saved by the user.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["WEBSITE", "GAME", "KOTLIN", "PROMPT"],
+          "description": "Type of AI creation."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short title for the creation."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "User prompt used to generate this creation."
+        },
+        "content": {
+          "type": "string",
+          "description": "Generated HTML/JS, Kotlin source code, or prompt text."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last update (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "kind", "title", "prompt", "content", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private authenticated user profile document keyed by Firebase Auth UID."
+    },
+    "/users/{userId}/creations/{creationId}": {
+      "schema": { "$ref": "#/entities/SavedCreation" },
+      "description": "Saved AI Creation documents scoped under each user."
+    }
+  }
+}

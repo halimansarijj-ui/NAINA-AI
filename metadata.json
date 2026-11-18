@@ -1,0 +1,6 @@
+{
+  "name": "Naina AI",
+  "description": "Personal Hindi and English AI voice assistant with Gemini chat, image studio, website & app builder, and game builder.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
